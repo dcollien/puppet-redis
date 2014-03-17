@@ -1,5 +1,5 @@
 define redis::source(
-    $version = '2.2.14',
+    $version = '2.8.7',
     $path = '/usr/local/src',
     $bin = '/usr/local/bin',
     $owner = 'redis',
@@ -15,7 +15,7 @@ define redis::source(
                  group => root
              }
              exec { redis_code: 
-                  command =>"wget http://github.com/antirez/redis/tarball/${version} -O redis_${version}.tar.gz && tar --strip-components 1 -xzvf redis_${version}.tar.gz",
+                  command => "wget http://download.redis.io/releases/redis-${version}.tar.gz -O redis_${version}.tar.gz && tar --strip-components 1 -xzvf redis_${version}.tar.gz",
                   cwd => "${path}/redis_${version}",
                   creates => "${path}/redis_${version}/src/redis.c",
                   require => File["redis_folder"],
