@@ -1,13 +1,27 @@
-import "defines/*.pp"
-
 class redis {
     user { "redis":
         ensure => present,
     }
-    @service { "redis-server":
+
+    package { "redis-server":
+    	ensure => "latest"
+    }
+
+    service { "redis-server":
         ensure => running,
         enable => true,
         hasrestart => true,
-        require => File["/etc/init.d/redis-server"],
+        subscribe => File["/etc/redis.conf"],
+        require => [
+        	Package["redis-server"],
+        	File["/etc/memcached.conf"]
+        ],
+    }
+
+    firewall::accept { 'redis':
+    	host => $::web_nodes,
+    	port => 6379,
+    	comment => 'redis',
+    	runlevel => '052',
     }
 }
