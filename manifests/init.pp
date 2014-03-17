@@ -3,6 +3,10 @@ class redis {
         ensure => present,
     }
 
+    apt::ppa { "ppa:rwky/redis":
+    	
+    }
+
     package { "redis-server":
     	ensure => "latest"
     }
