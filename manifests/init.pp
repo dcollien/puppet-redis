@@ -14,7 +14,7 @@ class redis {
         subscribe => File["/etc/redis.conf"],
         require => [
         	Package["redis-server"],
-        	File["/etc/memcached.conf"]
+        	File["/etc/redis.conf"]
         ],
     }
 
